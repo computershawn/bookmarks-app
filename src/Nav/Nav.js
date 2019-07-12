@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export default function Nav(props) {
   return (
@@ -11,6 +11,10 @@ export default function Nav(props) {
       <Link to={'/add-bookmark'}>
         Add Bookmark
       </Link>
+      {' '}
+      <Link to={'/edit-bookmark'}>
+        Edit Bookmark
+      </Link>      
     </nav>
   );
 }
