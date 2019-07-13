@@ -36,57 +36,26 @@ class App extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   fetch(config.API_ENDPOINT, {
-  //     method: 'GET',
-  //     headers: {
-  //       'content-type': 'application/json',
-  //       'Authorization': `Bearer ${config.API_KEY}`
-  //     }
-  //   })
-  //     .then(res => {
-  //       if (!res.ok) {
-  //         throw new Error(res.status)
-  //       }
-  //       return res.json()
-  //     })
-  //     .then(this.setBookmarks)
-  //     .catch(error => this.setState({ error }))
-  // }
-
   componentDidMount() {
-    const bookmarkId = this.props.match.params.bookmarkId
-    fetch(`https://localhost:8000/api/bookmarks/${bookmarkId}`, {
-      method: 'GET'
+    fetch(config.API_ENDPOINT, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      }
     })
-      // .then(/* some content omitted */)
-      // .then(responseData => {
-      //   this.setState({
-      //     /* fields state updates here */
-      //   })
-      // })
-      .then(responseData => {
-        this.context.updateArticle(responseData)
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(error => Promise.reject(error))
+        }
+        return res.json()
       })
-      .catch(error => {/* some content omitted */ })
+      .then(this.setBookmarks)
+      .catch(error => {
+        console.error(error)
+        this.setState({ error })
+      })
   }
-
-  // componentDidMount() {
-  //   const bookmarkId = this.props.match.params.bookmarkId
-  //   fetch(`https://localhost:8000/api/bookmarks/${bookmarkId}`, {
-  //     method: 'GET'
-  //   })
-  //     // .then(/* some content omitted */)
-  //     // .then(responseData => {
-  //     //   this.setState({
-  //     //     /* fields state updates here */
-  //     //   })
-  //     // })
-  //     .then(responseData => {
-  //       this.context.updateArticle(responseData)
-  //     })      
-  //     .catch(error => {/* some content omitted */ })
-  // }
 
   updateBookmark = updatedBookmark => {
     const newBookmarks = this.state.bookmarks.map(bm =>
